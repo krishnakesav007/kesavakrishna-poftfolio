@@ -280,7 +280,7 @@ export default function Page() {
               title="Leave Management System"
               description="Automated leave approval system using Flow Designer and Business Rules."
               image="/project1.png"
-              github="https://github.com/krishnakesav007"
+              github="https://github.com/krishnakesav007/leave-management-system"
               linkedin="https://www.linkedin.com/posts/kesava-krishna-amirineni-2b6b66255_servicenow-servicenowdeveloper-appenginestudio-ugcPost-7477628060536655872-DBgS/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD7_ZCoBL6xjVRNmv4MwgcVU0CsVN-1U--I/"
               tech={["ServiceNow", "Flow Designer", "Automation"]}
             />
