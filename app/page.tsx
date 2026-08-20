@@ -94,6 +94,39 @@ const scenarios = [
 ];
 
 export default function Page() {
+  const [status, setStatus] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevents page refresh/scroll jump
+    setIsSubmitting(true);
+    setStatus("Sending message...");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.append("access_key", "3750c19d-c4ef-4886-ad4a-f8435f468e03");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("Message sent successfully!");
+        form.reset();
+      } else {
+        setStatus("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      setStatus("Failed to send message. Please check your connection.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="relative bg-[#030712] text-white min-h-screen w-full scroll-smooth overflow-hidden">
       {/* MOVING STARFIELD BACKGROUND */}
@@ -330,13 +363,40 @@ export default function Page() {
               </div>
             </div>
 
-            <form className="p-6 border border-gray-800 rounded-2xl bg-[#0b0f19]/80 backdrop-blur-sm space-y-4">
-              <input type="text" placeholder="Your Name" className="w-full p-3 rounded-lg bg-gray-900/80 border border-gray-700 outline-none focus:border-purple-500 text-sm" />
-              <input type="email" placeholder="Your Email" className="w-full p-3 rounded-lg bg-gray-900/80 border border-gray-700 outline-none focus:border-purple-500 text-sm" />
-              <textarea placeholder="Message" rows={4} className="w-full p-3 rounded-lg bg-gray-900/80 border border-gray-700 outline-none focus:border-purple-500 text-sm"></textarea>
-              <button type="submit" className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 font-medium hover:opacity-90 transition">
-                Send Message
+            <form onSubmit={handleSubmit} className="p-6 border border-gray-800 rounded-2xl bg-[#0b0f19]/80 backdrop-blur-sm space-y-4">
+              <input 
+                type="text" 
+                name="name" 
+                placeholder="Your Name" 
+                required 
+                className="w-full p-3 rounded-lg bg-gray-900/80 border border-gray-700 outline-none focus:border-purple-500 text-sm text-white" 
+              />
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="Your Email" 
+                required 
+                className="w-full p-3 rounded-lg bg-gray-900/80 border border-gray-700 outline-none focus:border-purple-500 text-sm text-white" 
+              />
+              <textarea 
+                name="message" 
+                placeholder="Message" 
+                rows={4} 
+                required 
+                className="w-full p-3 rounded-lg bg-gray-900/80 border border-gray-700 outline-none focus:border-purple-500 text-sm text-white"
+              ></textarea>
+              <button 
+                type="submit" 
+                disabled={isSubmitting} 
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 font-medium hover:opacity-90 transition disabled:opacity-50"
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+              {status && (
+                <p className={`text-xs text-center mt-2 ${status.includes("successfully") ? "text-cyan-400" : "text-purple-400"}`}>
+                  {status}
+                </p>
+              )}
             </form>
           </div>
         </section>
