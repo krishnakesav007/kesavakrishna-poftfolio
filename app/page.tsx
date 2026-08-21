@@ -88,7 +88,7 @@ const scenarios = [
   {
     title: "Duplicate Record Prevention",
     description: "Prevents duplicate record creation by validating existing records.",
-    link: "https://www.linkedin.com/",
+    link: "https://www.linkedin.com/posts/kesava-krishna-amirineni-2b6b66255_servicenow-servicenowdeveloper-gliderecord-ugcPost-7496615591005356032--53d/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD7_ZCoBL6xjVRNmv4MwgcVU0CsVN-1U--I/",
     color: "yellow",
   },
 ];
